@@ -10,11 +10,13 @@ MAKEFLAGS += --output-sync=target
 .SUFFIXES:
 
 .PHONY: clean
+# Cleans up generated files
 clean:
 	$(call _info,Cleaning…)
 	@rm -rf $(trash)
 
 .PHONY: clobber
+# Cleans up the repository as if it was just cloned
 clobber:
 	$(call _info,Clobbering…)
 	@git clean -xfdn | cut -c 14- | xargs chmod -R +w && git clean -xfd
