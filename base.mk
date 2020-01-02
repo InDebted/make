@@ -17,4 +17,5 @@ clean:
 .PHONY: clobber
 clobber:
 	$(call _info,Clobbering…)
-	@git clean -xfd
+	@git clean -xfdn | cut -c 14- | xargs chmod -R +w && git clean -xfd
+	@rm -rf /usr/local/include/github.com/InDebted/make
