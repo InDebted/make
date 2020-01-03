@@ -1,5 +1,3 @@
-include github.com/InDebted/make/debug
-
 # Runs all tests for all modules
 test:
 	$(call _info,Testing…)

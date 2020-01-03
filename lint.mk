@@ -1,5 +1,8 @@
-include github.com/InDebted/make/debug
 go_files := $(shell find $$(ls -d */ | grep -v 'node_modules/') -iname '*.go' -type f)
+
+# Lints the source files looking for anti-patterns
+lint: lint-dependencies lint-format lint-imports lint-source
+.PHONY: lint
 
 lint-dependencies:
 	$(call _info,Linting dependencies…)
@@ -20,7 +23,3 @@ lint-source:
 	$(call _info,Linting source…)
 	@for file in $(go_files); do golint -set_exit_status "$$file" 2>&1; done
 .PHONY: lint-source
-
-# Lints the source files looking for anti-patterns
-lint: lint-dependencies lint-format lint-imports lint-source
-.PHONY: lint

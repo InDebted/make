@@ -1,5 +1,3 @@
-MAKEFILE_PRINT ?= true
-
 define _print
 	@[ -z "${MAKEFILE_PRINT}" ] || printf "$(1)\n"
 endef
