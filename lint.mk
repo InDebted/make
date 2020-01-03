@@ -1,27 +1,26 @@
 include github.com/InDebted/make/debug
-include github.com/InDebted/make/docker
-go_files := $(shell find . -iname '*.go' -type f -not -path "./.go/*" -not -path "./node_modules/*")
+go_files := $(shell find $$(ls -d */ | grep -v 'node_modules/') -iname '*.go' -type f)
 
-.PHONY: lint-dependencies
 lint-dependencies:
 	$(call _info,Linting dependencies…)
-	$(call docker,go mod verify)
+	@go mod verify
+.PHONY: lint-dependencies
 
-.PHONY: lint-format
 lint-format:
 	$(call _info,Linting format…)
-	$(call docker,gofmt -l $(go_files) | tee /dev/fd/2 | xargs test -z)
+	@gofmt -l $(go_files) | tee /dev/fd/2 | xargs test -z
+.PHONY: lint-format
 
-.PHONY: lint-imports
 lint-imports:
 	$(call _info,Linting imports…)
-	$(call docker,goimports -l $(go_files) | tee /dev/fd/2 | xargs test -z)
+	@goimports -l $(go_files) | tee /dev/fd/2 | xargs test -z
+.PHONY: lint-imports
 
-# Buildddeee
 lint-source:
 	$(call _info,Linting source…)
-	$(call docker,for file in $(go_files); do golint -set_exit_status "\$$file" 2>&1; done)
+	@for file in $(go_files); do golint -set_exit_status "$$file" 2>&1; done
 .PHONY: lint-source
 
-.PHONY: lint
+# Lints the source files looking for anti-patterns
 lint: lint-dependencies lint-format lint-imports lint-source
+.PHONY: lint
