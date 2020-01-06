@@ -2,6 +2,7 @@
 clean:
 	$(call _info,Cleaning…)
 	@rm -rf $(trash)
+	@rm -rf package.tar.gz
 .PHONY: clean
 
 # Cleans up the repository as if it was just cloned
