@@ -71,13 +71,15 @@ db.force: db.is-up
 .PHONY: db.force
 
 # Show current migration version
-db.version: db.isup
+db.version: db.is-up
 	$(call _info,$(MOD_NAME) DB version…)
 	$(MIGRATE) version
 .PHONY: db.version
 
-# Seed database with data/seed/main.go
-db.seed: db.isup
+ifdef SEED
+# Seed database with SEED
+db.seed: db.is-up
 	$(call _info,Seeding DB $(MOD_NAME)…)
 	@SVC_NAME=$(GO_MOD) DB_ENDPOINT=writer go run $(SEED)
 .PHONY: db.seed
+endif
