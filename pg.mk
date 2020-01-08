@@ -8,32 +8,32 @@ MIGRATE = @migrate -database "$(DB_URL)" -path $(MIGRATION_PATH)
 CREATE_DB = 'create database "$(MOD_NAME)"'
 DROP_DB = 'drop database if exists "$(MOD_NAME)"'
 
-# Wait for the db to be up
-db.isup:
+# Wait for postgres to be up
+db.is-up:
 	$(call _info,Waiting for Postgres…)
 	@dockerize -wait tcp://$(PG_SERVICE):5432 -timeout 60s
-.PHONY: db.isup
+.PHONY: db.is-up
 
 # Reset database (rollback, migrate)
-db.reset: db.isup db.rollback db.migrate
+db.reset: db.is-up db.rollback db.migrate
 .PHONY: db.reset
 
 # Create database
-db.create: db.isup
+db.create: db.is-up
 	$(call _info,Creating DB $(MOD_NAME)…)
 	@echo ">" $(CREATE_DB)
 	@psql $(DB_BASE_URL) -c $(CREATE_DB)
 .PHONY: db.create
 
 # Drop database
-db.drop: db.isup
+db.drop: db.is-up
 	$(call _info,Dropping DB $(MOD_NAME)…)
 	@echo ">" $(DROP_DB)
 	@psql $(DB_BASE_URL) -c $(DROP_DB)
 .PHONY: db.drop
 
 # Generate migration with NAME=<migration_name>
-db.generate: db.isup
+db.generate: db.is-up
 	$(if $(NAME),,$(error NAME env var must be set to a migration name.))
 
 	$(call _info,Generating DB $(MOD_NAME)…)
@@ -42,7 +42,7 @@ db.generate: db.isup
 .PHONY: db.generate
 
 # Apply all or N=<n> database migrations
-db.migrate: db.isup
+db.migrate: db.is-up
 	$(if $(N), \
 		$(call _info,Running migrations up to $(N) on DB $(MOD_NAME)…), \
 		$(call _info,Running all migrations on DB $(MOD_NAME)…) \
@@ -52,7 +52,7 @@ db.migrate: db.isup
 .PHONY: db.migrate
 
 # Rollback all or N=<n> database migrations
-db.rollback: db.isup
+db.rollback: db.is-up
 	$(if $(N), \
 		$(call _info,Rolling back migrations down to $(N) on DB $(MOD_NAME)…), \
 		$(call _info,Rolling back all migrations on DB $(MOD_NAME)…) \
@@ -62,7 +62,7 @@ db.rollback: db.isup
 .PHONY: db.rollback
 
 # Set migration version V=<v> without running migration
-db.force: db.isup
+db.force: db.is-up
 	$(if $(V),,$(error V env var must be set.))
 
 	$(call _info,Force DB $(MOD_NAME) to migration $(V)…)
