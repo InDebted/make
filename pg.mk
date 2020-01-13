@@ -24,7 +24,7 @@ db.create: db.is-up
 	@psql $(DB_BASE_URL) -c $(CREATE_DB)
 ifdef DB_SCHEMA
 	@echo ">" $(DB_SCHEMA)
-	@psql $(DB_BASE_URL) -f $(DB_SCHEMA)
+	@psql $(DB_URL) -f $(DB_SCHEMA)
 endif
 .PHONY: db.create
 
