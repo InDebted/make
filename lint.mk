@@ -1,4 +1,4 @@
-go_files := $(shell find $$(ls -d */ | grep -v 'node_modules/') -iname '*.go' -type f)
+go_files := $(shell find $$(ls -d */ | grep -v 'node_modules/') . -iname '*.go' -type f)
 
 # Lints the source files looking for anti-patterns
 lint: lint-dependencies lint-format lint-imports lint-source
