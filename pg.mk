@@ -1,4 +1,3 @@
-
 GO_MOD = $(shell head -n 1 go.mod|sed "s/^module //g")
 MOD_NAME = $(shell basename $(GO_MOD))
 DB_BASE_URL ?= postgres://$(PG_USER):$(PG_PWD)@${PG_SERVICE}
@@ -23,6 +22,10 @@ db.create: db.is-up
 	$(call _info,Creating DB $(MOD_NAME)…)
 	@echo ">" $(CREATE_DB)
 	@psql $(DB_BASE_URL) -c $(CREATE_DB)
+ifdef DB_SCHEMA
+	@echo ">" $(DB_SCHEMA)
+	@psql $(DB_BASE_URL) -f $(DB_SCHEMA)
+endif
 .PHONY: db.create
 
 # Drop database
