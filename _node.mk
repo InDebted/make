@@ -4,5 +4,5 @@ node_modules: yarn.lock package.json
 	@mkdir -p $@
 	@touch $@
 
-node-modules: yarn.lock
+node-modules: node_modules
 .PHONY: node-modules
