@@ -24,6 +24,6 @@ lint-imports:
 
 lint-source:
 	$(call _info,Linting source…)
-	@for file in $(go_files); do golint -set_exit_status "$$file" 2>&1; done
+	@$(call git-ls,'*.go') | xargs -n1 golint -set_exit_status 2>&1
 	$(call _info,Linting source finished!)
 .PHONY: lint-source
