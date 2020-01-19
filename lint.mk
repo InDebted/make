@@ -1,5 +1,3 @@
-go_files = $(shell { git ls-files '*.go' & git ls-files -o --exclude-standard '*.go'; })
-
 # Lints the source files looking for anti-patterns
 lint: lint-dependencies lint-format lint-imports lint-source
 .PHONY: lint
@@ -12,13 +10,13 @@ lint-dependencies:
 
 lint-format:
 	$(call _info,Linting format…)
-	@gofmt -l $(go_files) | tee /dev/fd/2 | xargs test -z
+	@gofmt -l $(shell $(call git-ls,'*.go')) | tee /dev/fd/2 | xargs test -z
 	$(call _info,Linting format finished!)
 .PHONY: lint-format
 
 lint-imports:
 	$(call _info,Linting imports…)
-	@goimports -l $(go_files) | tee /dev/fd/2 | xargs test -z
+	@goimports -l $(shell $(call git-ls,'*.go')) | tee /dev/fd/2 | xargs test -z
 	$(call _info,Linting imports finished!)
 .PHONY: lint-imports
 
