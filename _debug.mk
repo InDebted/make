@@ -1,5 +1,5 @@
 define _print
-	@[ -z "${MAKEFILE_PRINT}" ] || printf "$(1)\n"
+	[ -z "${MAKEFILE_PRINT}" ] || printf "$(1)\n"
 endef
 
 define _info

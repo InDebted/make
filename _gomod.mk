@@ -1,5 +1,5 @@
 .tmp/gomod.log: go.mod go.sum
-	$(call _info,Downloading go modules…)
+	@$(call _info,Downloading go modules…)
 	@mkdir -p $(dir $@)
 	@go mod download | tee $@
 

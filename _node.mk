@@ -1,5 +1,5 @@
 node_modules: yarn.lock package.json
-	$(call _info,Downloading node modules…)
+	@$(call _info,Downloading node modules…)
 	@npx yarn install
 	@mkdir -p $@
 	@touch $@

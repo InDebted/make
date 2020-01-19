@@ -4,7 +4,7 @@ serverless-deploy := npx --no-install sls deploy --aws-s3-accelerate --conceal -
 deploy: $(all_handlers) | node-modules
 	$(if $(ENV),,$(error ENV environment variable is required))
 
-	$(call _info,Deploying $(notdir $(CURDIR)) to $(ENV) environment…)
+	@$(call _info,Deploying $(notdir $(CURDIR)) to $(ENV) environment…)
 	@$(serverless-deploy)
 .PHONY: deploy
 
@@ -12,6 +12,6 @@ deploy: $(all_handlers) | node-modules
 deploy/%: $(dist_dir)/% | node-modules
 	$(if $(ENV),,$(error ENV environment variable is required))
 
-	$(call _info,Deploying $* to $(ENV) environment…)
+	@$(call _info,Deploying $* to $(ENV) environment…)
 	@$(serverless-deploy) --function $*
 .PHONY: deploy/%
