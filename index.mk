@@ -9,6 +9,7 @@ MAKEFILE_PRINT ?= true
 .SUFFIXES:
 .DEFAULT_GOAL := build
 
+include github.com/InDebted/make/_git
 include github.com/InDebted/make/_debug
 include github.com/InDebted/make/_gomod
 include github.com/InDebted/make/_node
