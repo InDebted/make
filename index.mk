@@ -13,6 +13,7 @@ include github.com/InDebted/make/_git
 include github.com/InDebted/make/_debug
 include github.com/InDebted/make/_gomod
 include github.com/InDebted/make/_node
+include github.com/InDebted/make/_docker
 include github.com/InDebted/make/build
 include github.com/InDebted/make/clean
 include github.com/InDebted/make/deploy
