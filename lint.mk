@@ -10,13 +10,13 @@ lint.dependencies:
 
 lint.format:
 	@$(call _info,Linting format…)
-	@gofmt -l $(shell $(call git-ls,'*.go')) | tee /dev/fd/2 | xargs test -z
+	@gofmt -l $(shell $(call git-ls,'*.go')) | tee /dev/fd/2 | xargs -I{} test -z "{}"
 	@$(call _info,Linting format finished!)
 .PHONY: lint.format
 
 lint.imports:
 	@$(call _info,Linting imports…)
-	@goimports -l $(shell $(call git-ls,'*.go')) | tee /dev/fd/2 | xargs test -z
+	@goimports -l $(shell $(call git-ls,'*.go')) | tee /dev/fd/2 | xargs -I{} test -z "{}"
 	@$(call _info,Linting imports finished!)
 .PHONY: lint.imports
 
