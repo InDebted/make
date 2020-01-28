@@ -1,4 +1,4 @@
-serverless-deploy := npx --no-install sls deploy --aws-s3-accelerate --conceal --verbose --stage $(ENV)
+serverless-deploy := npx yarn serverless deploy --aws-s3-accelerate --conceal --verbose --stage $(ENV)
 
 # Deploys all handlers to ENV
 deploy: $(all_handlers) | node-modules
