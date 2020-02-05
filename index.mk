@@ -19,3 +19,4 @@ include github.com/InDebted/make/clean
 include github.com/InDebted/make/deploy
 include github.com/InDebted/make/lint
 include github.com/InDebted/make/test
+include github.com/InDebted/make/precommit
